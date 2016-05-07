@@ -6,7 +6,7 @@ public class State {
 
 	public static enum STATE {
 		MENU_MAIN, MENU_NEW, MENU_LOAD, MENU_CONNECT, 
-		GAME_GALACTIC, GAME_SOLAR, GAME_PLANETARY, GAME_SATTELITE, GAME_SURFACE_P, GAME_SURFACE_S, GAME_BATTLE
+		GAME_GALACTIC, GAME_SOLAR, GAME_PLANETARY, GAME_SATTELITE, GAME_SURFACE, GAME_BATTLE
 	}
 	
 	public static void setState(String name){
@@ -35,11 +35,8 @@ public class State {
 		case "sattelite":
 			state = STATE.GAME_SATTELITE;
 			break;
-		case "surfacep":
-			state = STATE.GAME_SURFACE_P;
-			break;
-		case "surfaces":
-			state = STATE.GAME_SURFACE_S;
+		case "surface":
+			state = STATE.GAME_SURFACE;
 			break;
 		case "battle":
 			state = STATE.GAME_BATTLE;

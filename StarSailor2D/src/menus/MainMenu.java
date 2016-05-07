@@ -1,15 +1,17 @@
 package menus;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import main.State;
 import utils.InputHandler;
 
-public class MainMenu extends JPanel {
+public class MainMenu extends Menu {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel title;
@@ -17,7 +19,12 @@ public class MainMenu extends JPanel {
 	private InputHandler newHandler, loadHandler, connectHandler, exitHandler;
 
 	public MainMenu() {
-		title
+		title = new JLabel("Star Sailor");
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setVerticalAlignment(SwingConstants.CENTER);
+		title.setFont(new Font("Arial", Font.BOLD, 100));
+		title.setForeground(Color.white);
+		title.setBounds(0, 0, InputHandler.screenSize.width, InputHandler.screenSize.height / 5);
 		newGame = new JButton("New Game");
 		newHandler = new InputHandler(newGame);
 		newGame.setBounds((int) InputHandler.midPoint.x - InputHandler.screenSize.width / 12,
@@ -38,6 +45,7 @@ public class MainMenu extends JPanel {
 				(int) InputHandler.midPoint.y + InputHandler.screenSize.height / 8, InputHandler.screenSize.width / 6,
 				InputHandler.screenSize.height / 10);
 		setLayout(null);
+		add(title);
 		add(newGame);
 		add(loadGame);
 		add(connect);

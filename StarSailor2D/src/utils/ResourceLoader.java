@@ -16,6 +16,7 @@ public class ResourceLoader {
 	
 	private static ResourceLoader rl = new ResourceLoader();
 	private static BufferedReader reader = null;
+	public static Image background = ResourceLoader.getImage("menu/bg2.png");
 	
 	/**
 	 * gets an image at the path specified

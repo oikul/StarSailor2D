@@ -1,12 +1,14 @@
 package main;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
 
 import javax.swing.JFrame;
 
 import galaxy.Galaxy;
+import menus.ConnectMenu;
+import menus.LoadGameMenu;
 import menus.MainMenu;
+import menus.NewGameMenu;
 import utils.InputHandler;
 
 public class Main extends JFrame {
@@ -15,6 +17,9 @@ public class Main extends JFrame {
 	private boolean running = false;
 	private Galaxy galaxy;
 	private MainMenu mainMenu;
+	private NewGameMenu newMenu;
+	private LoadGameMenu loadMenu;
+	private ConnectMenu connectMenu;
 
 	public static void main(String args[]) {
 		Main main = new Main();
@@ -42,6 +47,7 @@ public class Main extends JFrame {
 	}
 
 	public void update() {
+		int change = 0;
 		switch(State.state){
 		case GAME_BATTLE:
 			galaxy.update();
@@ -58,24 +64,63 @@ public class Main extends JFrame {
 		case GAME_SOLAR:
 			galaxy.update();
 			break;
-		case GAME_SURFACE_P:
-			galaxy.update();
-			break;
-		case GAME_SURFACE_S:
+		case GAME_SURFACE:
 			galaxy.update();
 			break;
 		case MENU_CONNECT:
+			change = connectMenu.update();
+			if(change == 1){
+				//connect
+			}else if(change == 2){
+				mainMenu = new MainMenu();
+				remove(connectMenu);
+				add(mainMenu);
+				setVisible(true);
+			}
 			break;
 		case MENU_LOAD:
+			change = loadMenu.update();
+			if(change == 1){
+				//load game
+			}else if(change == 2){
+				mainMenu = new MainMenu();
+				remove(loadMenu);
+				add(mainMenu);
+				setVisible(true);
+			}
 			break;
 		case MENU_MAIN:
-			if(mainMenu.update() == 1){
-				removeAll();
-				
-				repaint();
+			change = mainMenu.update();
+			if(change == 1){
+				newMenu = new NewGameMenu();
+				remove(mainMenu);
+				add(newMenu);
+				setVisible(true);
+			}else if(change == 2){
+				loadMenu = new LoadGameMenu();
+				remove(mainMenu);
+				add(loadMenu);
+				setVisible(true);
+			}else if(change == 3){
+				connectMenu = new ConnectMenu();
+				remove(mainMenu);
+				add(connectMenu);
+				setVisible(true);
 			}
 			break;
 		case MENU_NEW:
+			change = newMenu.update();
+			if(change == 1){
+				galaxy = new Galaxy(newMenu.getSeed().hashCode());
+				remove(newMenu);
+				add(galaxy);
+				setVisible(true);
+			}else if(change == 2){
+				mainMenu = new MainMenu();
+				remove(newMenu);
+				add(mainMenu);
+				setVisible(true);
+			}
 			break;
 		default:
 			break;
@@ -83,27 +128,25 @@ public class Main extends JFrame {
 	}
 
 	public void draw() {
+		Graphics2D g2d = (Graphics2D) this.getGraphics();
 		switch(State.state){
 		case GAME_BATTLE:
-			galaxy.draw();
+			galaxy.draw(g2d);
 			break;
 		case GAME_GALACTIC:
-			galaxy.draw();
+			galaxy.draw(g2d);
 			break;
 		case GAME_PLANETARY:
-			galaxy.draw();
+			galaxy.draw(g2d);
 			break;
 		case GAME_SATTELITE:
-			galaxy.draw();
+			galaxy.draw(g2d);
 			break;
 		case GAME_SOLAR:
-			galaxy.draw();
+			galaxy.draw(g2d);
 			break;
-		case GAME_SURFACE_P:
-			galaxy.draw();
-			break;
-		case GAME_SURFACE_S:
-			galaxy.draw();
+		case GAME_SURFACE:
+			galaxy.draw(g2d);
 			break;
 		case MENU_CONNECT:
 			break;

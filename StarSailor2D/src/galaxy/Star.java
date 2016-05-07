@@ -2,17 +2,20 @@ package galaxy;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.Random;
 
 public class Star extends PlanetaryBody {
 	
 	private Color color;
 	private Random random;
+	private Rectangle connection;
+	private int connectIndex = -1;
 
 	public Star(double size, double distance, double angle, long seed) {
 		super(size, distance, angle, seed);
 		random = new Random(seed + name.hashCode());
-		getColor();
+		generate();
 	}
 
 	@Override
@@ -23,13 +26,17 @@ public class Star extends PlanetaryBody {
 
 	@Override
 	public void draw(Graphics2D g2d) {
+		if(connection != null){
+			g2d.setColor(Color.cyan);
+			g2d.drawLine(x - (int) size/2, y - (int) size/2, connection.x - connection.width/2, connection.y - connection.height/2);
+		}
 		g2d.setColor(color);
-		g2d.fillOval(x, y, (int) size, (int) size);
+		g2d.fillOval((int) (x - size/2), (int) (y - size/2), (int) size, (int) size);
 	}
 
 	@Override
 	public void generate() {
-		
+		getColor();
 	}
 	
 	private void getColor(){
@@ -55,6 +62,22 @@ public class Star extends PlanetaryBody {
 		}else if(val >= 0.9 && val <= 1){
 			color = Color.pink;
 		}
+	}
+	
+	public void setHyperSpaceLane(Rectangle star){
+		connection = star;
+	}
+
+	public int getConnectIndex() {
+		return connectIndex;
+	}
+
+	public void setConnectIndex(int connectIndex) {
+		this.connectIndex = connectIndex;
+	}
+	
+	public Rectangle getRect(){
+		return new Rectangle(x, y, (int) size, (int) size);
 	}
 	
 }
