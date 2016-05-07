@@ -5,14 +5,14 @@ import java.awt.Image;
 
 import javax.swing.JFrame;
 
-import galaxy.Planet;
+import galaxy.Galaxy;
 import utils.InputHandler;
 
 public class Main extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private boolean running = false;
-	private Planet planet;
+	private Galaxy galaxy;
 
 	public static void main(String args[]) {
 		Main main = new Main();
@@ -34,19 +34,19 @@ public class Main extends JFrame {
 		setExtendedState(MAXIMIZED_BOTH);
 		setUndecorated(true);
 		setVisible(true);
-		planet = new Planet(20, 0, 0, System.currentTimeMillis());
+		galaxy = new Galaxy(8192, 4096, 4, 16, 2, 8, System.currentTimeMillis());
 		running = true;
 	}
 
 	public void update() {
-		planet.update();
+		galaxy.update();
 	}
 
 	public void draw() {
 		Graphics2D g2d = (Graphics2D) this.getGraphics();
 		Image offImage = this.createImage(InputHandler.screenSize.width, InputHandler.screenSize.height);
 		Graphics2D offGraphics = (Graphics2D) offImage.getGraphics();
-		planet.draw(offGraphics);
+		galaxy.draw(offGraphics);
 		g2d.drawImage(offImage, 0, 0, null);
 	}
 

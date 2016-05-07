@@ -1,7 +1,10 @@
 package galaxy;
 
-import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.Random;
+
+import utils.InputHandler;
 
 public class Galaxy {
 
@@ -28,11 +31,17 @@ public class Galaxy {
 	}
 
 	public void update() {
-		
+		for(int i = 0; i < numStars; i++){
+			stars[i].update();
+		}
 	}
 
-	public void draw(Graphics g) {
-
+	public void draw(Graphics2D g2d) {
+		g2d.setColor(Color.black);
+		g2d.fillRect(0, 0, InputHandler.screenSize.width, InputHandler.screenSize.height);
+		for(int i = 0; i < numStars; i++){
+			stars[i].draw(g2d);
+		}
 	}
 	
 	public void generateStars(){
