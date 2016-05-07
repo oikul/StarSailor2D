@@ -15,6 +15,10 @@ public class Main extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private boolean running = false;
+	private double interpolation = 0;
+	private final int TICKS_PER_SECOND = 25;
+	private final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
+	private final int MAX_FRAMESKIP = 5;
 	private Galaxy galaxy;
 	private MainMenu mainMenu;
 	private NewGameMenu newMenu;
@@ -28,10 +32,17 @@ public class Main extends JFrame {
 
 	public void run() {
 		initialise();
+		double nextTick = System.currentTimeMillis();
+		int loops;
 		while (running) {
-			update();
+			loops = 0;
+			while(System.currentTimeMillis() > nextTick && loops < MAX_FRAMESKIP){
+				update();
+				nextTick += SKIP_TICKS;
+				loops++;
+			}
+			interpolation = (System.currentTimeMillis() + SKIP_TICKS - nextTick / (double) SKIP_TICKS);
 			draw();
-			capFPS(InputHandler.refreshRate);
 		}
 	}
 
@@ -159,9 +170,6 @@ public class Main extends JFrame {
 		default:
 			break;
 		}
-	}
-
-	public void capFPS(int fps) {
 	}
 
 }

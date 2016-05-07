@@ -36,7 +36,7 @@ public class LoadGameMenu extends Menu {
 		load.setBounds(InputHandler.screenSize.width / 12, InputHandler.screenSize.height / 12,
 				InputHandler.screenSize.width / 6, InputHandler.screenSize.height / 30);
 		loadList = new JList<String>();
-		loadList.setBounds(2 * InputHandler.screenSize.width / 12, InputHandler.screenSize.height / 12,
+		loadList.setBounds(3 * InputHandler.screenSize.width / 12, InputHandler.screenSize.height / 12,
 				InputHandler.screenSize.width / 2, InputHandler.screenSize.height / 2);
 		setLayout(null);
 		add(loadGame);
