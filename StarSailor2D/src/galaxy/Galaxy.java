@@ -2,12 +2,16 @@ package galaxy;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.util.Random;
+
+import javax.swing.JPanel;
 
 import utils.InputHandler;
 
-public class Galaxy {
+public class Galaxy extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private Random random;
 	private PlanetaryBody[] stars;
 	private PlanetaryBody[][] planets;
@@ -31,22 +35,27 @@ public class Galaxy {
 	}
 
 	public void update() {
-		for(int i = 0; i < numStars; i++){
+		for (int i = 0; i < numStars; i++) {
 			stars[i].update();
 		}
 	}
 
-	public void draw(Graphics2D g2d) {
-		g2d.setColor(Color.black);
-		g2d.fillRect(0, 0, InputHandler.screenSize.width, InputHandler.screenSize.height);
-		for(int i = 0; i < numStars; i++){
-			stars[i].draw(g2d);
+	public void draw() {
+		Graphics2D g2d = (Graphics2D) this.getGraphics();
+		Image offImage = this.createImage(InputHandler.screenSize.width, InputHandler.screenSize.height);
+		Graphics2D offGraphics = (Graphics2D) offImage.getGraphics();
+		offGraphics.setColor(Color.black);
+		offGraphics.fillRect(0, 0, InputHandler.screenSize.width, InputHandler.screenSize.height);
+		for (int i = 0; i < numStars; i++) {
+			stars[i].draw(offGraphics);
 		}
+		g2d.drawImage(offImage, 0, 0, null);
 	}
-	
-	public void generateStars(){
-		for(int i = 0; i < numStars; i++){
-			stars[i] = new Star(random.nextDouble() * 5, random.nextInt(size), random.nextDouble() * 2 * Math.PI, seed + i);
+
+	public void generateStars() {
+		for (int i = 0; i < numStars; i++) {
+			stars[i] = new Star(random.nextDouble() * 5, random.nextInt(size), random.nextDouble() * 2 * Math.PI,
+					seed + i);
 		}
 	}
 
