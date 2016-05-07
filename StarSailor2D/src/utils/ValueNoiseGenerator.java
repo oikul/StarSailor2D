@@ -2,6 +2,8 @@ package utils;
 
 import java.util.Random;
 
+import galaxy.Biome;
+
 public class ValueNoiseGenerator {
 
 	private Random random = new Random();
@@ -21,6 +23,13 @@ public class ValueNoiseGenerator {
 		this.amplitude = amplitude;
 		this.roughness = roughness;
 		this.octaves = octaves;
+	}
+	
+	public ValueNoiseGenerator(long seed, Biome biome){
+		this.seed = seed;
+		this.amplitude = biome.getAmplitude();
+		this.roughness = biome.getRoughness();
+		this.octaves = biome.getOctaves();
 	}
 
 	public float generateHeight(int x, int z) {

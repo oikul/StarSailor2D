@@ -10,12 +10,12 @@ public class Star extends PlanetaryBody {
 
 	@Override
 	public void update() {
-		
+		incrementAngle(0.1);
 	}
 
 	@Override
 	public void draw(Graphics2D g2d) {
-		
+		g2d.fillOval(x, y, width, height);
 	}
 
 	@Override

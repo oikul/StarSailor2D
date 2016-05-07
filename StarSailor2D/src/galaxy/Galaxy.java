@@ -24,10 +24,11 @@ public class Galaxy {
 		planets = new Planet[this.numStars][this.maxPlanets];
 		moons = new Planet[this.numStars][this.maxPlanets][this.maxMoons];
 		random = new Random(this.seed);
+		generateStars();
 	}
 
 	public void update() {
-
+		
 	}
 
 	public void draw(Graphics g) {

@@ -8,6 +8,7 @@ public abstract class PlanetaryBody {
 	
 	protected double size, distance, angle;
 	protected long seed;
+	protected int x, y;
 	protected String name;
 	
 	public PlanetaryBody(double size, double distance, double angle, long seed){
@@ -22,6 +23,21 @@ public abstract class PlanetaryBody {
 	public abstract void draw(Graphics2D g2d);
 	
 	public abstract void generate();
+	
+	public void incrementAngle(double amount){
+		if(angle < 360){
+			angle += amount;
+		}else{
+			angle = 0;
+		}
+	}
+	
+	public void getXAndY(){
+		if(angle >= 0 && angle < 90){
+			x = (int) (distance * Math.cos(angle));
+			y = (int) (distance * Math.sin(angle));
+		}else if(angle >= 90 && angle <)
+	}
 
 	public double getSize() {
 		return size;
