@@ -2,7 +2,7 @@ package utils;
 
 import java.util.Random;
 
-import galaxy.Biome;
+import biomes.Biome;
 
 public class ValueNoiseGenerator {
 

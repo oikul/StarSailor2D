@@ -2,6 +2,7 @@ package galaxy;
 
 import java.awt.Graphics2D;
 
+import biomes.Biome;
 import main.State;
 import utils.InputHandler;
 import utils.ValueNoiseGenerator;
@@ -49,7 +50,7 @@ public class Planet extends PlanetaryBody {
 		case GAME_PLANETARY:
 			break;
 		case GAME_SOLAR:
-			g2d.setColor(biome.color);
+			g2d.setColor(biome.getColor());
 			g2d.fillOval(x - (int) size/2 + xOffset, y - (int) size/2 + yOffset, (int) size, (int) size); 
 			break;
 		case GAME_SURFACE:

@@ -1,7 +1,10 @@
-package galaxy;
+package biomes;
 
 import java.awt.Color;
 import java.util.ArrayList;
+
+import galaxy.BiomePart;
+import galaxy.Block;
 
 public class Biome {
 
@@ -59,6 +62,10 @@ public class Biome {
 
 	public int getOctaves() {
 		return octaves;
+	}
+
+	public Color getColor() {
+		return color;
 	}
 
 }

@@ -1,6 +1,9 @@
-package galaxy;
+package biomes;
 
 import java.awt.Color;
+
+import galaxy.BiomePart;
+import galaxy.Block;
 
 public class BiomeIslands extends Biome {
 
