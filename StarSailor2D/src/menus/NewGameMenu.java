@@ -42,10 +42,10 @@ public class NewGameMenu extends Menu {
 		seed.setBounds(InputHandler.screenSize.width / 12, 2 * InputHandler.screenSize.height / 12,
 				InputHandler.screenSize.width / 6, InputHandler.screenSize.height / 30);
 		nameEntry = new JTextField("galaxy");
-		nameEntry.setBounds(2 * InputHandler.screenSize.width / 12, InputHandler.screenSize.height / 12,
+		nameEntry.setBounds(3 * InputHandler.screenSize.width / 12, InputHandler.screenSize.height / 12,
 				InputHandler.screenSize.width / 2, InputHandler.screenSize.height / 30);
 		seedEntry = new JTextField("seed");
-		seedEntry.setBounds(2 * InputHandler.screenSize.width / 12, 2 * InputHandler.screenSize.height / 12,
+		seedEntry.setBounds(3 * InputHandler.screenSize.width / 12, 2 * InputHandler.screenSize.height / 12,
 				InputHandler.screenSize.width / 2, InputHandler.screenSize.height / 30);
 		setLayout(null);
 		add(create);

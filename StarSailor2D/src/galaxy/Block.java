@@ -13,6 +13,7 @@ public class Block {
 	public static final Block water_river = new Block("water/water_river.png", 500, true);
 	
 	public static final Block tree_palm = new Block("trees/tree_palm.png", -1, true);
+	public static final Block tree_cactus = new Block("trees/tree_cactus.png", -1, true);
 	
 	private Image[] textures;
 	private long time, animationWaitTime;

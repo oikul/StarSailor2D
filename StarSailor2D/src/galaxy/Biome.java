@@ -1,20 +1,24 @@
 package galaxy;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class Biome {
 
-	public static final Biome ISLANDS = new BiomeIslands(1.0f, 0.25f, 4);
+	public static final Biome ISLANDS = new BiomeIslands(1.0f, 0.25f, 4, Color.blue);
+	public static final Biome DESERT = new BiomeDesert(1.0f, 0.1f, 2, Color.yellow);
 
 	protected float amplitude, roughness;
 	protected int octaves;
 	protected ArrayList<BiomePart> biomeParts = new ArrayList<BiomePart>();
 	protected ArrayList<BiomePart> decoration = new ArrayList<BiomePart>();
+	protected Color color;
 
-	public Biome(float amplitude, float roughness, int octaves) {
+	public Biome(float amplitude, float roughness, int octaves, Color color) {
 		this.amplitude = amplitude;
 		this.roughness = roughness;
 		this.octaves = octaves;
+		this.color = color;
 	}
 
 	public Block[][] generateBiome(float[][] noise) {

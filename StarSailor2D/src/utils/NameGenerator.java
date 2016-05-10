@@ -12,7 +12,7 @@ public class NameGenerator {
 			"e", "ed", "en", "ent", "er", "ess", "eth", "ex", 
 			"fa", "fid", "flect", "flor", "fleur", "for", "fract", "faa", "faas", "fab", "fahg", "fal", "fer", 
 			"gastro", "gen", "geo", "giga", "glu", "gre", "gyn",
-			"hel", "ho", "hut", 
+			"hect", "helic", "helio", "hemi", "hex", "ho", "hut", "hydr", "hyp", 
 			"i", "ian", "in", "ine", "io", "ist", "ize", 
 			"ja", "jak", "ject", "jel", "jil", "jud", "juven", 
 			"ka", "kaa", "kel", "kes", "kilo", "kine", "ku",

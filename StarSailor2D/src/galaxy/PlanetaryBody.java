@@ -1,6 +1,8 @@
 package galaxy;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import utils.InputHandler;
 import utils.NameGenerator;
@@ -9,8 +11,10 @@ public abstract class PlanetaryBody {
 	
 	protected double size, distance, angle;
 	protected long seed;
-	protected int x, y;
+	protected int x, y, xOffset = 0, yOffset = 0;
 	protected String name;
+	protected Color color;
+	protected boolean generated = false, selected = false;
 	
 	public PlanetaryBody(double size, double distance, double angle, long seed){
 		this.size = size;
@@ -25,8 +29,24 @@ public abstract class PlanetaryBody {
 	
 	public abstract void generate();
 	
+	public void panUp(){
+		yOffset ++;
+	}
+	
+	public void panLeft(){
+		xOffset ++;
+	}
+	
+	public void panDown(){
+		yOffset --;
+	}
+	
+	public void panRight(){
+		xOffset --;
+	}
+	
 	public void incrementAngle(double amount){
-		if(angle < 360){
+		if(angle < 2 * Math.PI){
 			angle += amount;
 		}else{
 			angle = amount;
@@ -59,6 +79,22 @@ public abstract class PlanetaryBody {
 
 	public double getAngle() {
 		return angle;
+	}
+
+	public boolean isGenerated() {
+		return generated;
+	}
+
+	public void setGenerated(boolean generated) {
+		this.generated = generated;
+	}
+
+	public Rectangle getRect() {
+		return new Rectangle(x, y, (int) size, (int) size);
+	}
+	
+	public Rectangle getRectWithOffset(){
+		return new Rectangle(x + xOffset, y + yOffset, (int) size, (int) size);
 	}
 
 }
