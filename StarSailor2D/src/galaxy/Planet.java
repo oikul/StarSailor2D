@@ -25,7 +25,7 @@ public class Planet extends PlanetaryBody {
 
 	@Override
 	public void update() {
-		switch (State.state) {
+		switch (State.getState()) {
 		case GAME_PLANETARY:
 			break;
 		case GAME_SOLAR:
@@ -46,7 +46,7 @@ public class Planet extends PlanetaryBody {
 
 	@Override
 	public void draw(Graphics2D g2d) {
-		switch (State.state) {
+		switch (State.getState()) {
 		case GAME_PLANETARY:
 			break;
 		case GAME_SOLAR:
@@ -57,10 +57,10 @@ public class Planet extends PlanetaryBody {
 			for (int i = 0; i < terrain.length; i++) {
 				for (int j = 0; j < terrain[0].length; j++) {
 					if (!blocks[i][j].equals(null)) {
-						blocks[i][j].draw(g2d, i * 16, j * 16);
+						blocks[i][j].draw(g2d, i * 16 + xOffset, j * 16 + yOffset);
 					}
 					if (deco[i][j] != null) {
-						deco[i][j].draw(g2d, i * 16, j * 16);
+						deco[i][j].draw(g2d, i * 16 + xOffset, j * 16 + yOffset);
 					}
 				}
 			}

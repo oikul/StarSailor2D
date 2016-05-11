@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -22,46 +24,68 @@ public class Galaxy extends JPanel {
 	private PlanetaryBody[][] planets;
 	private PlanetaryBody[][][] moons;
 	private int size = 65536, numStars = 4096, minPlanets = 4, maxPlanets = 16, minMoons = 2, maxMoons = 8,
-			currentStar = -1, currentPlanet = -1, currentMoon = -1;
+			currentStar = 0, currentPlanet = 0, currentMoon = -1;
 	private long seed;
-	private BufferedImage offImage = new BufferedImage(InputHandler.screenSize.width, InputHandler.screenSize.height,
-			BufferedImage.TYPE_INT_ARGB);
+	private boolean overStar = false, overPlanet = false, overMoon = false;
+	private double zoomGalactic = 1.0, zoomSolar = 1.0, zoomPlanetary = 1.0;
+	private BufferedImage offImage = new BufferedImage(InputHandler.screenSize.width * 4,
+			InputHandler.screenSize.height * 4, BufferedImage.TYPE_INT_ARGB);
 	private Graphics2D offGraphics;
 	private InputHandler input;
 
-	public Galaxy(long seed) {
+	public Galaxy(String seed) {
 		stars = new Star[this.numStars];
 		planets = new Planet[this.numStars][this.maxPlanets];
 		moons = new Planet[this.numStars][this.maxPlanets][this.maxMoons];
-		random = new Random(seed);
+		for(char c : seed.toCharArray()){
+			this.seed += (int) c;
+		}
+		random = new Random(this.seed);
 		offGraphics = (Graphics2D) offImage.getGraphics();
 		input = new InputHandler(this);
 		generateStars();
 	}
 
 	public void update() {
-		switch (State.state) {
-		case GAME_BATTLE:
-			break;
+		switch (State.getState()) {
 		case GAME_GALACTIC:
 			if (input.isMouseDown(MouseEvent.BUTTON1)) {
 				currentStar = checkForClickGalactic(input.getMousePositionOnScreen());
 			}
 			if (input.getMouseWheelUp()) {
-				State.setState("star");
+				if (zoomGalactic < 5.0) {
+					zoomGalactic += 0.1;
+				} else if (currentStar != -1 && overStar) {
+					State.setState(State.STATE.GAME_SOLAR);
+				}
+				input.stopMouseWheel();
+			}
+			if (input.getMouseWheelDown()) {
+				if (zoomGalactic > 0.5) {
+					zoomGalactic -= 0.1;
+				}
+				input.stopMouseWheel();
 			}
 			for (int i = 0; i < numStars; i++) {
 				stars[i].update();
 				if (currentStar != -1) {
 					if (Player.playerRect.x > stars[currentStar].x + stars[currentStar].xOffset) {
 						stars[i].panLeft();
+						overStar = false;
 					} else if (Player.playerRect.x < stars[currentStar].x + stars[currentStar].xOffset) {
 						stars[i].panRight();
+						overStar = false;
 					}
 					if (Player.playerRect.y > stars[currentStar].y + stars[currentStar].yOffset) {
 						stars[i].panUp();
+						overStar = false;
 					} else if (Player.playerRect.y < stars[currentStar].y + stars[currentStar].yOffset) {
 						stars[i].panDown();
+						overStar = false;
+					}
+					if (Player.playerRect.x == stars[currentStar].x + stars[currentStar].xOffset
+							&& Player.playerRect.y == stars[currentStar].y + stars[currentStar].yOffset) {
+						overStar = true;
 					}
 				}
 			}
@@ -72,7 +96,52 @@ public class Galaxy extends JPanel {
 				}
 			}
 			break;
+		case GAME_SOLAR:
+			if (!stars[currentStar].isGenerated()) {
+				generatePlanets();
+				stars[currentStar].setGenerated(true);
+			}
+			if (input.getMouseWheelUp()) {
+				if (zoomSolar < 5.0) {
+					zoomSolar += 0.1;
+				} else if (currentPlanet != -1 && overPlanet) {
+					State.setState(State.STATE.GAME_PLANETARY);
+				}
+				input.stopMouseWheel();
+			}
+			if (input.getMouseWheelDown()) {
+				if (zoomSolar > 0.5) {
+					zoomSolar -= 0.1;
+				} else {
+					State.setState(State.STATE.GAME_GALACTIC);
+				}
+				input.stopMouseWheel();
+			}
+			for (int i = 0; i < maxPlanets; i++) {
+				if (planets[currentStar][i] != null) {
+					planets[currentStar][i].update();
+				}
+			}
+			break;
 		case GAME_PLANETARY:
+			if (input.getMouseWheelUp()) {
+				if (zoomPlanetary < 5.0) {
+					zoomPlanetary += 0.1;
+				} else if (currentMoon == -1 && overMoon) {
+					State.setState(State.STATE.GAME_SURFACE);
+				} else if (currentMoon != -1 && overMoon) {
+					State.setState(State.STATE.GAME_SATTELITE);
+				}
+				input.stopMouseWheel();
+			}
+			if (input.getMouseWheelDown()) {
+				if (zoomPlanetary > 0.5) {
+					zoomPlanetary -= 0.1;
+				} else {
+					State.setState(State.STATE.GAME_SOLAR);
+				}
+				input.stopMouseWheel();
+			}
 			if (!planets[currentStar][currentPlanet].isGenerated()) {
 				generateMoons();
 				planets[currentStar][currentPlanet].setGenerated(true);
@@ -85,19 +154,26 @@ public class Galaxy extends JPanel {
 			break;
 		case GAME_SATTELITE:
 			break;
-		case GAME_SOLAR:
+		case GAME_SURFACE:
 			if (!stars[currentStar].isGenerated()) {
 				generatePlanets();
 				stars[currentStar].setGenerated(true);
 			}
-			for (int i = 0; i < maxPlanets; i++) {
-				if (planets[currentStar][i] != null) {
-					planets[currentStar][i].update();
-				}
+			if(input.isKeyDown(KeyEvent.VK_W)){
+				planets[currentStar][currentPlanet].panUp();
 			}
-			break;
-		case GAME_SURFACE:
+			if(input.isKeyDown(KeyEvent.VK_A)){
+				planets[currentStar][currentPlanet].panLeft();
+			}
+			if(input.isKeyDown(KeyEvent.VK_S)){
+				planets[currentStar][currentPlanet].panDown();
+			}
+			if(input.isKeyDown(KeyEvent.VK_D)){
+				planets[currentStar][currentPlanet].panRight();
+			}
 			planets[currentStar][currentPlanet].update();
+			break;
+		case GAME_BATTLE:
 			break;
 		default:
 			break;
@@ -106,14 +182,20 @@ public class Galaxy extends JPanel {
 
 	public void draw(Graphics2D g2d) {
 		offGraphics.setColor(Color.black);
-		offGraphics.fillRect(0, 0, InputHandler.screenSize.width, InputHandler.screenSize.height);
-		switch (State.state) {
+		offGraphics.fillRect(-InputHandler.screenSize.width, -InputHandler.screenSize.height, offImage.getWidth(),
+				offImage.getHeight());
+		switch (State.getState()) {
 		case GAME_BATTLE:
 			break;
 		case GAME_GALACTIC:
 			for (int i = 0; i < numStars; i++) {
 				stars[i].draw(offGraphics);
 			}
+			AffineTransform galaxyT = new AffineTransform();
+			galaxyT.translate(InputHandler.midPoint.x, InputHandler.midPoint.y);
+			galaxyT.scale(zoomGalactic, zoomGalactic);
+			galaxyT.translate(-InputHandler.midPoint.x, -InputHandler.midPoint.y);
+			offGraphics.setTransform(galaxyT);
 			break;
 		case GAME_PLANETARY:
 			planets[currentStar][currentPlanet].draw(offGraphics);

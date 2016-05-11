@@ -96,5 +96,4 @@ public abstract class PlanetaryBody {
 	public Rectangle getRectWithOffset(){
 		return new Rectangle(x + xOffset, y + yOffset, (int) size, (int) size);
 	}
-
 }

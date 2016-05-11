@@ -60,11 +60,11 @@ public class NewGameMenu extends Menu {
 	public int update() {
 		int change = 0;
 		if (createHandler.isMouseDown(MouseEvent.BUTTON1)) {
-			State.setState("galaxy");
+			State.setState(State.STATE.GAME_SURFACE);
 			change = 1;
 		}
 		if (cancelHandler.isMouseDown(MouseEvent.BUTTON1)) {
-			State.setState("main");
+			State.setState(State.STATE.MENU_MAIN);
 			change = 2;
 		}
 		return change;
