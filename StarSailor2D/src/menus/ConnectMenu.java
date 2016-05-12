@@ -33,10 +33,10 @@ public class ConnectMenu extends Menu{
 	public int update() {
 		int change = 0;
 		if(connectHandler.isMouseDown(MouseEvent.BUTTON1)){
-			State.setState("");
+			State.setState(null);
 			change = 1;
 		}else if(cancelHandler.isMouseDown(MouseEvent.BUTTON1)){
-			State.setState("main");
+			State.setState(State.STATE.MENU_MAIN);
 			change = 2;
 		}
 		return change;

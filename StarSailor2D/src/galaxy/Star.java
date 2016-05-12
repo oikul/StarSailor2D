@@ -22,7 +22,7 @@ public class Star extends PlanetaryBody {
 
 	@Override
 	public void update() {
-		switch (State.state) {
+		switch (State.getState()) {
 		case GAME_GALACTIC:
 			incrementAngle(0.0001);
 			getXAndY();
@@ -37,7 +37,7 @@ public class Star extends PlanetaryBody {
 
 	@Override
 	public void draw(Graphics2D g2d) {
-		switch(State.state){
+		switch(State.getState()){
 		case GAME_GALACTIC:
 			if (connection != null) {
 				g2d.setColor(Color.cyan);

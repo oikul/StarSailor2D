@@ -55,15 +55,15 @@ public class MainMenu extends Menu {
 	public int update() {
 		int change = 0;
 		if (newHandler.isMouseDown(MouseEvent.BUTTON1)) {
-			State.setState("new");
+			State.setState(State.STATE.MENU_NEW);
 			change = 1;
 		}
 		if (loadHandler.isMouseDown(MouseEvent.BUTTON1)) {
-			State.setState("load");
+			State.setState(State.STATE.MENU_LOAD);
 			change = 2;
 		}
 		if (connectHandler.isMouseDown(MouseEvent.BUTTON1)) {
-			State.setState("connect");
+			State.setState(State.STATE.MENU_CONNECT);
 			change = 3;
 		}
 		if (exitHandler.isMouseDown(MouseEvent.BUTTON1)) {
