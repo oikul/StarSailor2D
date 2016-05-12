@@ -59,7 +59,7 @@ public class Planet extends PlanetaryBody {
 			break;
 		case GAME_SURFACE:
 			if (imageMade) {
-				g2d.drawImage(terrainImage, xOffset, yOffset, null);
+				g2d.drawImage(terrainImage, xOffset, yOffset, terrainImage.getWidth(), terrainImage.getHeight(), null);
 			} else {
 				Graphics2D g = (Graphics2D) terrainImage.getGraphics();
 				for (int i = 0; i < terrain.length; i++) {
@@ -70,13 +70,6 @@ public class Planet extends PlanetaryBody {
 						if (deco[i][j] != null) {
 							deco[i][j].draw(g, i * 16 + xOffset, j * 16 + yOffset);
 						}
-			for (int i = 0; i < terrain.length; i++) {
-				for (int j = 0; j < terrain[0].length; j++) {
-					if (!blocks[i][j].equals(null)) {
-						blocks[i][j].draw(g2d, i * 16 + xOffset, j * 16 + yOffset);
-					}
-					if (deco[i][j] != null) {
-						deco[i][j].draw(g2d, i * 16 + xOffset, j * 16 + yOffset);
 					}
 				}
 				g2d.drawImage(terrainImage, xOffset, yOffset, null);
@@ -100,33 +93,33 @@ public class Planet extends PlanetaryBody {
 	}
 
 	public void chooseBiome() {
-		double maxDist = InputHandler.midPoint.y;
+//		double maxDist = InputHandler.midPoint.y;
 		biome = Biome.DESERT;
-		if (size >= 0 && size < 4) {
-			if (distance >= 0 && distance < maxDist / 3) {
-				biome = Biome.DESERT;
-			} else if (distance >= maxDist / 3 && distance < 2 * maxDist / 3) {
-				biome = Biome.ISLANDS;
-			} else if (distance >= 2 * maxDist / 3 && distance <= maxDist) {
-				biome = Biome.DESERT;
-			}
-		} else if (size >= 4 && size < 7) {
-			if (distance >= 0 && distance < maxDist / 3) {
-				biome = Biome.ISLANDS;
-			} else if (distance >= maxDist / 3 && distance < 2 * maxDist / 3) {
-				biome = Biome.DESERT;
-			} else if (distance >= 2 * maxDist / 3 && distance <= maxDist) {
-				biome = Biome.ISLANDS;
-			}
-		} else if (size >= 7 && size <= 10) {
-			if (distance >= 0 && distance < maxDist / 3) {
-				biome = Biome.DESERT;
-			} else if (distance >= maxDist / 3 && distance < 2 * maxDist / 3) {
-				biome = Biome.ISLANDS;
-			} else if (distance >= 2 * maxDist / 3 && distance <= maxDist) {
-				biome = Biome.DESERT;
-			}
-		}
+//		if (size >= 0 && size < 4) {
+//			if (distance >= 0 && distance < maxDist / 3) {
+//				biome = Biome.DESERT;
+//			} else if (distance >= maxDist / 3 && distance < 2 * maxDist / 3) {
+//				biome = Biome.ISLANDS;
+//			} else if (distance >= 2 * maxDist / 3 && distance <= maxDist) {
+//				biome = Biome.OCEAN;
+//			}
+//		} else if (size >= 4 && size < 7) {
+//			if (distance >= 0 && distance < maxDist / 3) {
+//				biome = Biome.ISLANDS;
+//			} else if (distance >= maxDist / 3 && distance < 2 * maxDist / 3) {
+//				biome = Biome.DESERT;
+//			} else if (distance >= 2 * maxDist / 3 && distance <= maxDist) {
+//				biome = Biome.OCEAN;
+//			}
+//		} else if (size >= 7 && size <= 10) {
+//			if (distance >= 0 && distance < maxDist / 3) {
+//				biome = Biome.DESERT;
+//			} else if (distance >= maxDist / 3 && distance < 2 * maxDist / 3) {
+//				biome = Biome.ISLANDS;
+//			} else if (distance >= 2 * maxDist / 3 && distance <= maxDist) {
+//				biome = Biome.OCEAN;
+//			}
+//		}
 	}
 
 }

@@ -6,6 +6,8 @@ import java.awt.Image;
 import utils.ResourceLoader;
 
 public class Block {
+	
+	public static final Block deco_rocks = new Block("decoration/rocks.png", -1, true);
 
 	public static final Block grass_forest = new Block("grass/grass_forest.png", -1, false);
 	public static final Block grass_jungle = new Block("grass/grass_jungle.png", -1, false);
@@ -26,7 +28,7 @@ public class Block {
 	public static final Block tree_baobab = new Block("trees/tree_baobab.png", -1, true);
 	public static final Block tree_birch = new Block("trees/tree_birch.png", -1, true);
 	public static final Block tree_cactus = new Block("trees/tree_cactus.png", -1, true);
-	public static final Block tree_oak = new Block("trees/tree_oak.png", -1, true);
+	public static final Block tree_oak = new Block("trees/tree_oak_1.png", -1, true);
 	public static final Block tree_palm = new Block("trees/tree_palm.png", -1, true);
 	public static final Block tree_pine = new Block("trees/tree_pine.png", -1, true);
 	public static final Block tree_rubber = new Block("trees/tree_rubber.png", -1, true);
@@ -43,12 +45,16 @@ public class Block {
 	private long time, animationWaitTime;
 	private int index;
 	private boolean solid;
+	private long id;
 
 	public Block(String path, long animationWaitTime, boolean solid) {
 		textures = ResourceLoader.getBlockSprites(path, 16, 16);
 		this.animationWaitTime = animationWaitTime;
 		time = System.currentTimeMillis();
 		this.solid = solid;
+		for(char c : path.toCharArray()){
+			this.id += (int) c;
+		}
 	}
 	
 	public void update(){
@@ -69,6 +75,10 @@ public class Block {
 
 	public boolean isSolid() {
 		return solid;
+	}
+	
+	public long getID(){
+		return id;
 	}
 
 }

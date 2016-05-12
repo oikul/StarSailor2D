@@ -9,7 +9,9 @@ import galaxy.Block;
 public class Biome {
 
 	public static final Biome ISLANDS = new BiomeIslands(1.0f, 0.25f, 4, Color.blue);
-	public static final Biome DESERT = new BiomeDesert(1.0f, 0.1f, 2, Color.yellow);
+	public static final Biome DESERT = new BiomeDesert(8f, 0f, 4, Color.yellow);
+	public static final Biome OCEAN = new BiomeOcean(1.0f, 0.1f, 2, Color.blue);
+	public static final Biome FOREST = new BiomeForest(5f, 0.0f, 6, Color.green);
 
 	protected float amplitude, roughness;
 	protected int octaves;

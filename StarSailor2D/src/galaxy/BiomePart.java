@@ -13,7 +13,7 @@ public class BiomePart {
 		this.start = start;
 		this.end = end;
 		this.chance = chance;
-		random = new Random((long) (start * end * chance));
+		random = new Random((long) (chance * block.getID() * 217645177));
 	}
 
 	public boolean isBetween(double val) {
