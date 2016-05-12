@@ -14,7 +14,6 @@ public class Main extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private boolean running = false;
-	private double interpolation = 0;
 	private final int TICKS_PER_SECOND = 25;
 	private final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 	private final int MAX_FRAMESKIP = 5;
@@ -40,7 +39,6 @@ public class Main extends JFrame {
 				nextTick += SKIP_TICKS;
 				loops++;
 			}
-			interpolation = (System.currentTimeMillis() + SKIP_TICKS - nextTick / (double) SKIP_TICKS);
 			draw();
 		}
 	}

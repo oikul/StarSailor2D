@@ -171,6 +171,10 @@ public class Galaxy extends JPanel {
 			if(input.isKeyDown(KeyEvent.VK_D)){
 				planets[currentStar][currentPlanet].panRight();
 			}
+			if (input.getMouseWheelDown()) {
+				State.setState(State.STATE.GAME_PLANETARY);
+				input.stopMouseWheel();
+			}
 			planets[currentStar][currentPlanet].update();
 			break;
 		case GAME_BATTLE:
