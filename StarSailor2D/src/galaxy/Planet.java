@@ -94,7 +94,7 @@ public class Planet extends PlanetaryBody {
 
 	public void chooseBiome() {
 //		double maxDist = InputHandler.midPoint.y;
-		biome = Biome.DESERT;
+		biome = Biome.JUNGLE;
 //		if (size >= 0 && size < 4) {
 //			if (distance >= 0 && distance < maxDist / 3) {
 //				biome = Biome.DESERT;
